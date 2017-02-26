@@ -425,26 +425,19 @@ var WechatShare = function() {
 						e.shareCallback(o);
 					} else {
 						if ("event" == i && n && n.indexOf("share") > 0) {
-							var q1 = "sendAppMessage";
-							var q2 = n;
-							if (n == "general:share") {
-								var q3 = a['__params'];
-								q2 = q3['shareTo'];
-							}
-							if (q2.indexOf("timeline") != -1) {
-								q1 = "shareTimeline";
-							}
-
-							window.shareType = q1;
-							window.shareData = getShareData();
-
 							var s = window.shareData.desc,
 								r = window.shareData.link,
 								d = window.shareData.img_url,
 								c = window.shareData.title;
-							Object.defineProperty(o, "title", {
-								get: function() {
-									return delete o.scene,
+								
+							var shareios = "";
+							if (o.shareTo != null) {
+								shareios = o.shareTo
+							}
+							if (s.indexOf("share:timeline") > 0 || shareios == "timeline") {
+								Object.defineProperty(o, "title", {
+									get: function() {
+										return delete o.scene,
 										o.desc = s,
 										o.link = r,
 										o.img_url = d,
@@ -453,15 +446,40 @@ var WechatShare = function() {
 											enumerable: !0
 										}),
 										"title"
-								},
-								set: function() {},
-								enumerable: !1,
-								configurable: !0
-							}),
+									},
+									set: function() {},
+									enumerable: !1,
+									configurable: !0
+								}),
 								e.restoreHandleMessageHookForWeixin(),
 								e.oldHandleMesageHook(t),
 								e.setHandleMessageHookForWeixin()
-						} else { e.restoreHandleMessageHookForWeixin(),
+							} else {
+								Object.defineProperty(o, "title", {
+									get: function() {
+										return delete o.scene,
+										o.desc = s,
+										o.link = r,
+										o.img_url = d,
+										Object.defineProperty(o, "title", {
+											value: c,
+											enumerable: !0
+										}),
+										"title"
+									},
+									set: function() {},
+									enumerable: !1,
+									configurable: !0
+								}),
+								e.restoreHandleMessageHookForWeixin(),
+								e.oldHandleMesageHook(t),
+								e.setHandleMessageHookForWeixin()
+							}
+							
+							
+						} else { 
+							
+							e.restoreHandleMessageHookForWeixin(),
 							e.oldHandleMesageHook(t),
 							e.setHandleMessageHookForWeixin()
 						}
