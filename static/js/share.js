@@ -268,7 +268,7 @@ function wxalert(msg, btn, callback) {
     })
 }
 
-ttUrl = 'https://chenshuju.github.io/tv/sanshengsanshi/index.html';
+ttUrl = 'http://t.cn/RiPvcwC';
 
 function share_tip(share_app_times, share_timeline_times) {
     if (share_app_times < 3) {
