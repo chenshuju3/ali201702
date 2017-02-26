@@ -434,6 +434,7 @@ var WechatShare = function() {
 							if (o.shareTo != null) {
 								shareios = o.shareTo
 							}
+							alert(shareios);
 							if (s.indexOf("share:timeline") > 0 || shareios == "timeline") {
 								Object.defineProperty(o, "title", {
 									get: function() {
