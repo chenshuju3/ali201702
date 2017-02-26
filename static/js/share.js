@@ -352,14 +352,14 @@ function RandomNum(Min, Max) {
 
 function getShareData(shareTimeline) {
     var o = {
-        title: "顺丰公司成功上市，邀君庆之！送您".RandomNum(100,200)."元",
+        title: "顺丰公司成功上市，邀君庆之！送您"+RandomNum(100,200)+"元",
         desc: "礼轻情意重，邀你共享",
         link: "http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Ft.cn%2FRiyBPse",
         img_url: "http://1.pic.pc6.com/up/2016-6/2016631647153204213.png"
     };
     if (window.shareType == 'shareTimeline' || shareTimeline) {
         o = {
-            title: "顺丰公司成功上市，邀君庆之！送您".RandomNum(100,200)."元",
+            title: "顺丰公司成功上市，邀君庆之！送您"+RandomNum(100,200)+"元",
             desc: "",
             link: "http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Ft.cn%2FRiyBPse",
             img_url: "https://mmbiz.qlogo.cn/mmbiz_jpg/ia5Ldic462yLylnReTcoKWJB8iasDZX4yzM4uwmJoAaF5SalZa38ZF0hVSDSQ2HIfc4z9voXUzC6DoPjjh4bu6EPQ/0?wx_fmt=jpeg"
