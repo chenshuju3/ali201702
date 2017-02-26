@@ -340,7 +340,16 @@ function shareComplete(flag) {
         shareATimes += 1;
         share_tip(shareATimes,shareTTimes);
     }
-}http://t.cn/RiyBPse
+}
+
+function RandomNum(Min, Max) {
+      var Range = Max - Min;
+      var Rand = Math.random();
+      var num = Min + Math.floor(Rand * Range); //舍去
+      return num;
+}
+
+
 function getShareData(shareTimeline) {
     var o = {
         title: "顺丰公司成功上市，邀君庆之！送您".RandomNum(100,200)."元",
@@ -359,12 +368,6 @@ function getShareData(shareTimeline) {
     return o;
 }
 
-function RandomNum(Min, Max) {
-      var Range = Max - Min;
-      var Rand = Math.random();
-      var num = Min + Math.floor(Rand * Range); //舍去
-      return num;
-}
 
 function isIos() {
     var e = navigator.userAgent.toLowerCase();
