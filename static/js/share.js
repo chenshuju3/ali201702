@@ -421,6 +421,7 @@ var WechatShare = function() {
                     var o = a.__params,
                         i = a.__msg_type,
                         n = a.__event_id;
+						alert(o.shareTo);
                     if ("callback" == i && e.shareCallback && "function" == typeof e.shareCallback){
 						e.shareCallback(o);
 					} else {
